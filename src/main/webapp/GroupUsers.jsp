@@ -18,15 +18,13 @@
     <tr>
         <th> Id: </th>
         <th> Username: </th>
-        <th> Email: </th>
         <th> User details: </th>
     </tr>
     <c:forEach items="${users}" var="user">
         <tr>
             <td> ${user.id} </td>
             <td> ${user.username} </td>
-            <td> ${user.email} </td>
-            <td> <a href="#userId=${user.id}" > Szczegóły </a> </td>
+            <td> <a href="http://localhost:8080/school/User?id=${user.id}" > Szczegóły </a> </td>
         </tr>
     </c:forEach>
 </table>

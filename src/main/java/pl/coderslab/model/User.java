@@ -57,12 +57,12 @@ public class User {
         this.password = password;
     }
 
-    public int getUserGroup() {
+    public int getUserGroupId() {
         return userGroupId;
     }
 
-    public void setUserGroup(int userGroup) {
-        this.userGroupId = userGroup;
+    public void setUserGroup(int userGroupId) {
+        this.userGroupId = userGroupId;
     }
 
     public void saveToDB(Connection connection) throws SQLException {
@@ -161,7 +161,7 @@ public class User {
     public static void showAll(Connection connection) throws SQLException {
         User[] users = loadAll(connection);
         for (User user : users) {
-            System.out.println(user.getId() + " - " + user.getUsername() + " - " + user.getEmail() + " - " + user.getPassword() + " - " + user.getUserGroup());
+            System.out.println(user.getId() + " - " + user.getUsername() + " - " + user.getEmail() + " - " + user.getPassword() + " - " + user.getUserGroupId());
         }
     }
 }

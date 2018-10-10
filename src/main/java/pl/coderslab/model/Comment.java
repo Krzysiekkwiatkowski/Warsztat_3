@@ -123,12 +123,4 @@ public class Comment {
             System.out.println(comment.id + " " + comment.grade + " " + comment.description + " " + comment.solution_id);
         }
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            Comment.showAll(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

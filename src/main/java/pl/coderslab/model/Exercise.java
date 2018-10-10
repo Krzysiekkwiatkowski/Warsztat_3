@@ -111,48 +111,6 @@ public class Exercise {
         }
     }
 
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            String option = "";
-            Scanner scanner = new Scanner(System.in);
-            Scanner scanner1 = new Scanner(System.in);
-            while (!option.equals("quit")) {
-                showAll(connection);
-                System.out.println("Wybierz jedną z opcji add, edit, delete, quit");
-                option = scanner.next();
-                if (option.equals("add")) {
-                    Exercise exercise = new Exercise();
-                    System.out.println("Podaj tytuł");
-                    String title = scanner1.nextLine();
-                    exercise.title = title;
-                    System.out.println("Podaj opis");
-                    String description = scanner1.nextLine();
-                    exercise.description = description;
-                    exercise.saveToDB(connection);
-                }
-                if (option.equals("edit")) {
-                    System.out.println("Podaj id");
-                    int exerciseId = Integer.parseInt(scanner1.nextLine());
-                    Exercise exercise = Exercise.loadById(connection, exerciseId);
-                    System.out.println("Podaj tytuł");
-                    exercise.title = scanner1.nextLine();
-                    System.out.println("Podaj opis");
-                    exercise.description = scanner1.nextLine();
-                    exercise.saveToDB(connection);
-                }
-                if (option.equals("delete")) {
-                    System.out.println("Podaj id");
-                    int exerciseId = scanner1.nextInt();
-                    Exercise exercise = Exercise.loadById(connection, exerciseId);
-                    exercise.delete(connection);
-                    exercise.id = 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Exercise[] loadAllWithoutSolution(Connection connection, long id) throws SQLException {
         ArrayList<Exercise> exercises = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ALL_EXERCISE_WITHOUT_SOLUTION);

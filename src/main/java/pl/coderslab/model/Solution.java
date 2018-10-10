@@ -14,6 +14,7 @@ public class Solution {
     private static String LOAD_SOLUTION_BY_ID = "SELECT * FROM solution WHERE id = ?";
     private static String LOAD_SOLUTION_BY_EXERCISE_AND_USER_ID = "SELECT * FROM solution WHERE exercise_id = ? AND users_id = ?";
     private static String LOAD_ALL_SOLUTIONS = "SELECT * FROM solution";
+    private static String LOAD_LIMIT_SOLUTIONS = "SELECT * FROM solution ORDER BY id DESC LIMIT ?";
     private static String LOAD_ALL_SOLUTIONS_BY_USER_ID = "SELECT * FROM solution WHERE users_id = ?";
     private static String LOAD_ALL_SOLUTIONS_BY_EXERCISE_ID = "SELECT * FROM solution WHERE exercise_id = ?";
 
@@ -178,6 +179,30 @@ public class Solution {
         return solutionTable;
     }
 
+    public static Solution[] loadAll(Connection connection, int number) throws SQLException {
+        ArrayList<Solution> solutions = new ArrayList<>();
+        PreparedStatement preparedStatement = connection.prepareStatement(LOAD_LIMIT_SOLUTIONS);
+        preparedStatement.setInt(1, number);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            Solution loadedSolution = new Solution();
+            loadedSolution.id = resultSet.getInt("id");
+            loadedSolution.created = resultSet.getDate("created");
+            loadedSolution.updated = resultSet.getDate("updated");
+            loadedSolution.description = resultSet.getString("description");
+            if(resultSet.getInt("exercise_id") != 0){
+                loadedSolution.exercise_id = resultSet.getInt("exercise_id");
+            }
+            if(resultSet.getInt("users_id") != 0){
+                loadedSolution.user_id = resultSet.getLong("users_id");
+            }
+            solutions.add(loadedSolution);
+        }
+        Solution[] solutionTable = new Solution[solutions.size()];
+        solutionTable = solutions.toArray(solutionTable);
+        return solutionTable;
+    }
+
     public static Solution[] loadAllByUserId(Connection connection, long id) throws SQLException {
         ArrayList<Solution> userSolutions = new ArrayList<>();
         PreparedStatement preparedStatement = connection.prepareStatement(LOAD_ALL_SOLUTIONS_BY_USER_ID);
@@ -222,40 +247,6 @@ public class Solution {
         Solution[] solutions = Solution.loadAll(connection);
         for (Solution solution : solutions) {
             System.out.println(solution.getId() + " - " + solution.getCreated() + " - " + solution.getUpdated() + " - " + solution.getDescription() + " - " + solution.getExercise_id() + " - " + solution.getUser_id());
-        }
-    }
-
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            String option = "";
-            Scanner scanner = new Scanner(System.in);
-            Scanner scanner1 = new Scanner(System.in);
-            while (!option.equals("quit")){
-                System.out.println("Wybierz jedną z opcji add, view, quit");
-                option = scanner.nextLine();
-                if(option.equals("add")){
-                    User.showAll(connection);
-                    System.out.println("Podaj id użytkownika");
-                    long userId = Long.valueOf(scanner.nextLine());
-                    Exercise.showAll(connection);
-                    System.out.println("Podaj id zadania");
-                    int exerciseId = Integer.parseInt(scanner1.nextLine());
-                    Solution solution = new Solution();
-                    solution.setExercise_id(exerciseId);
-                    solution.setUser_id(userId);
-                    solution.saveToDB(connection);
-                }
-                if(option.equals("view")){
-                    System.out.println("Podaj id użytkownika");
-                    long userId = Long.valueOf(scanner.nextLine());
-                    Solution[] solutions = loadAllByUserId(connection, userId);
-                    for (Solution solution : solutions) {
-                        System.out.println(solution.getCreated() + " - " + solution.getUpdated() + " - " + solution.getDescription() + " - " + solution.getExercise_id());
-                    }
-                }
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
         }
     }
 

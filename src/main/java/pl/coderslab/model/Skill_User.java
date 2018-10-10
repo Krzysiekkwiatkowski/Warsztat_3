@@ -109,48 +109,4 @@ public class Skill_User {
             System.out.println(skill_user.id + " " + skill_user.skill_id + " " + skill_user.user_id);
         }
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            String option = "";
-            Scanner scanner = new Scanner(System.in);
-            Scanner scanner1 = new Scanner(System.in);
-            while (!option.equals("quit")){
-                Skill_User.showAll(connection);
-                System.out.println("Wybierz jedną z opcji add, edit, delete, quit");
-                option = scanner.next();
-                if(option.equals("add")){
-                    Skill_User skill_user = new Skill_User();
-                    System.out.println("Podaj id umiejętności");
-                    int skillId = Integer.parseInt(scanner1.nextLine());
-                    skill_user.skill_id = skillId;
-                    System.out.println("Podaj id użytkownika");
-                    int userId = Integer.parseInt(scanner1.nextLine());
-                    skill_user.user_id = userId;
-                    skill_user.saveToDB(connection);
-                }
-                if(option.equals("edit")){
-                    System.out.println("Podaj id przypisania umiejętności do edycji");
-                    int id = Integer.parseInt(scanner1.nextLine());
-                    Skill_User skill_user = Skill_User.loadById(connection, id);
-                    System.out.println("Podaj id umiejętności");
-                    int skillId = Integer.parseInt(scanner1.nextLine());
-                    skill_user.skill_id = skillId;
-                    System.out.println("Podaj id użytkownika");
-                    int userId = Integer.parseInt(scanner1.nextLine());
-                    skill_user.user_id = userId;
-                    skill_user.saveToDB(connection);
-                }
-                if(option.equals("delete")){
-                    System.out.println("Podaj id przypisania umiejętności do usunięcia");
-                    int id = scanner1.nextInt();
-                    Skill_User skill_user = Skill_User.loadById(connection, id);
-                    skill_user.delete(connection);
-                    skill_user.id = 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

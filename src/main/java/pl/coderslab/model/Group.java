@@ -95,40 +95,4 @@ public class Group {
             System.out.println(group.getId() + " - " + group.getName());
         }
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            String option = "";
-            Scanner scanner = new Scanner(System.in);
-            Scanner scanner1 = new Scanner(System.in);
-            while (!option.equals("quit")){
-                showAll(connection);
-                System.out.println("Wybierz jedną z opcji add, edit, delete, quit");
-                option = scanner.next();
-                if(option.equals("add")){
-                    Group group = new Group();
-                    System.out.println("Podaj nazwę");
-                    group.name = scanner1.nextLine();
-                    group.saveToDB(connection);
-                }
-                if(option.equals("edit")){
-                    System.out.println("Podaj id");
-                    int groupId = Integer.parseInt(scanner1.nextLine());
-                    Group loadedGroup = Group.loadById(connection, groupId);
-                    System.out.println("Podaj nazwę");
-                    loadedGroup.name = scanner1.nextLine();
-                    loadedGroup.saveToDB(connection);
-                }
-                if(option.equals("delete")){
-                    System.out.println("Podaj id");
-                    int groupId = Integer.parseInt(scanner1.nextLine());
-                    Group group = Group.loadById(connection, groupId);
-                    group.delete(connection);
-                    group.id = 0;
-                }
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
 }

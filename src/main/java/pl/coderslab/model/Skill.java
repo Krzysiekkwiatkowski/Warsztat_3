@@ -109,48 +109,4 @@ public class Skill {
             System.out.println(skill.id + " " + skill.skill + " " + skill.explanation);
         }
     }
-
-    public static void main(String[] args) {
-        try (Connection connection = DbUtil.getConn()){
-            String option = "";
-            Scanner scanner = new Scanner(System.in);
-            Scanner scanner1 = new Scanner(System.in);
-            while (!option.equals("quit")){
-                Skill.showAll(connection);
-                System.out.println("Wybierz jedną z opcji add, edit, delete, quit");
-                option = scanner.next();
-                if(option.equals("add")){
-                    Skill skill = new Skill();
-                    System.out.println("Podaj umiejętność");
-                    String newSkill = scanner1.nextLine();
-                    skill.skill = newSkill;
-                    System.out.println("Podaj wyjaśnienie");
-                    String explanation = scanner1.nextLine();
-                    skill.explanation = explanation;
-                    skill.saveToDB(connection);
-                }
-                if(option.equals("edit")){
-                    System.out.println("Podaj id umiejętności do edycji");
-                    int id = Integer.parseInt(scanner1.nextLine());
-                    Skill skill = Skill.loadById(connection, id);
-                    System.out.println("Podaj umiejętność");
-                    String newSkill = scanner1.nextLine();
-                    skill.skill = newSkill;
-                    System.out.println("Podaj wyjaśnienie");
-                    String explanation = scanner1.nextLine();
-                    skill.explanation = explanation;
-                    skill.saveToDB(connection);
-                }
-                if(option.equals("delete")){
-                    System.out.println("Podaj id umiejętności do usunięcia");
-                    int id = scanner1.nextInt();
-                    Skill skill = Skill.loadById(connection, id);
-                    skill.delete(connection);
-                    skill.id = 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -11,9 +11,10 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<p>
 <%@ include file="header.jsp" %>
 </br></br>
+<p><a href="http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=add" > Add </a></p>
 <table border="1px solid black">
     <tr>
         <th> Id: </th>
@@ -24,7 +25,7 @@
         <tr>
             <td> ${group.id} </td>
             <td> ${group.name} </td>
-            <td> <a href="http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=add" > Add </a> / <a href="http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=edit" > Edit </a> </td>
+            <td> <a href="http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=edit&id=${group.id}" > Edit </a> / <a href="http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=delete&id=${group.id}" > Delete </a> </td>
         </tr>
     </c:forEach>
 </table>

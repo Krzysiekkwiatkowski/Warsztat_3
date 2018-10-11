@@ -67,10 +67,19 @@ public class UsersGroupsAdmin extends HttpServlet {
                 Connection connection = DbUtil.getConn();
                 String name = Group.loadById(connection, id).getName();
                 response.getWriter().append("<form action=\"http://localhost:8080/school/panelAdmin/UsersGroupsAdmin?action=edit\" method=\"post\">\n" +
-                        "    <input type=\"hidden\" value=\"${group.id}\" name=\"id\">" +
+                        "    <input type=\"hidden\" value=\"" + id + "\" name=\"id\">" +
                         "    Name: <input type=\"text\" name=\"name\" value=\"" + name + "\">" +
                         "    <input type=\"submit\" value=\"Edit\">\n" +
                         "</form>");
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        } else if(action.equals("delete")){
+            try{
+                Connection connection = DbUtil.getConn();
+                int id = Integer.parseInt(request.getParameter("id"));
+                Group group = Group.loadById(connection, id);
+                group.delete(connection);
             } catch (SQLException e){
                 e.printStackTrace();
             }

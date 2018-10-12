@@ -14,17 +14,20 @@
 <body>
 <%@ include file="header.jsp" %>
 </br></br>
+<p><a href="http://localhost:8080/school/panelAdmin/ExercisesAdmin?action=add" > Add </a></p>
 <table border="1px solid black">
     <tr>
         <th> Id:</th>
         <th> Title:</th>
         <th> Description:</th>
+        <th> Action:</th>
     </tr>
     <c:forEach items="${exercises}" var="exercise">
         <tr>
             <td> ${exercise.id} </td>
             <td> ${exercise.title} </td>
             <td> ${exercise.description} </td>
+            <td> <a href="http://localhost:8080/school/panelAdmin/ExercisesAdmin?action=edit&id=${exercise.id}" > Edit </a> / <a href="http://localhost:8080/school/panelAdmin/ExercisesAdmin?action=delete&id=${exercise.id}" > Delete </a> </td>
         </tr>
     </c:forEach>
 </table>

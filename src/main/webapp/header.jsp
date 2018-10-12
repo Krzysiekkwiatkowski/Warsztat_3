@@ -13,7 +13,7 @@
 </head>
 <body>
 <header>
-    Header:  <a href="http://localhost:8080/school/Groups"> Linki nawigacyjne </a>
+    Header:  <a href="http://localhost:8080/school/Groups"> Grupy </a> / <a href="http://localhost:8080/school/Users"> Użytkownicy </a> / <a href="http://localhost:8080/school/Solutions"> Rozwiązania </a> / <a href="http://localhost:8080/school/panelAdmin" > Admin </a>
 </header>
 </body>
 </html>

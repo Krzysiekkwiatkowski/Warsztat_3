@@ -26,7 +26,6 @@ public class ExercisesAdmin extends HttpServlet {
                 Connection connection = DbUtil.getConn();
                 Exercise exercise = new Exercise(title, description);
                 exercise.saveToDB(connection);
-                response.sendRedirect("/school/panelAdmin/ExercisesAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -38,7 +37,6 @@ public class ExercisesAdmin extends HttpServlet {
                 exercise.setTitle(title);
                 exercise.setDescription(description);
                 exercise.saveToDB(connection);
-                response.sendRedirect("/school/panelAdmin/ExercisesAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -88,7 +86,6 @@ public class ExercisesAdmin extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Exercise exercise = Exercise.loadById(connection, id);
                 exercise.delete(connection);
-                response.sendRedirect("/school/panelAdmin/ExercisesAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }

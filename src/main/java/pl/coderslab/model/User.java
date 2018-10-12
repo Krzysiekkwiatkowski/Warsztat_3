@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class User {
 
     private static String SAVE_USER = "INSERT INTO users(username, email, password, user_group_id) VALUES (?,?,?,?)";
-    private static String EDIT_USER = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
+    private static String EDIT_USER = "UPDATE users SET username = ?, email = ?, password = ?, user_group_id = ? WHERE id = ?";
     private static String DELETE_USER = "DELETE FROM users WHERE id = ?";
     private static String LOAD_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static String LOAD_ALL_USERS = "SELECT * FROM users";
@@ -27,6 +27,13 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String username, String email, String password, Integer userGroupId) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.userGroupId = userGroupId;
     }
 
     public long getId() {
@@ -57,11 +64,11 @@ public class User {
         this.password = password;
     }
 
-    public int getUserGroupId() {
+    public Integer getUserGroupId() {
         return userGroupId;
     }
 
-    public void setUserGroup(int userGroupId) {
+    public void setUserGroupId(Integer userGroupId) {
         this.userGroupId = userGroupId;
     }
 
@@ -87,7 +94,12 @@ public class User {
             preparedStatement.setString(1, this.username);
             preparedStatement.setString(2, this.email);
             preparedStatement.setString(3, password);
-            preparedStatement.setLong(4, this.id);
+            if (this.userGroupId == null) {
+                preparedStatement.setNull(4, Types.INTEGER);
+            } else {
+                preparedStatement.setInt(4, this.userGroupId);
+            }
+            preparedStatement.setLong(5, this.id);
             preparedStatement.executeUpdate();
         }
     }

@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/school")
-public class Home extends HttpServlet {
+@WebServlet("/school/Solutions")
+public class Solutions extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -21,10 +21,9 @@ public class Home extends HttpServlet {
         response.setCharacterEncoding("UtF-8");
         try {
             Connection connection = DbUtil.getConn();
-            int number = Integer.parseInt(getServletContext().getInitParameter("number-solutions"));
-            Solution[] solutions = Solution.loadAll(connection, number);
+            Solution[] solutions = Solution.loadAll(connection);
             request.setAttribute("solutions", solutions);
-            getServletContext().getRequestDispatcher("/index.jsp")
+            getServletContext().getRequestDispatcher("/Solutions.jsp")
                     .forward(request, response);
         } catch (SQLException e){
             e.printStackTrace();

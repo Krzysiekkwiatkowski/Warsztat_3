@@ -27,7 +27,6 @@ public class UsersGroupsAdmin extends HttpServlet {
                 Group group = Group.loadById(connection, id);
                 group.setName(name);
                 group.saveToDB(connection);
-                response.sendRedirect("/school/panelAdmin/UsersGroupsAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -36,7 +35,6 @@ public class UsersGroupsAdmin extends HttpServlet {
                 Connection connection = DbUtil.getConn();
                 Group group = new Group(name);
                 group.saveToDB(connection);
-                response.sendRedirect("/school/panelAdmin/UsersGroupsAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }
@@ -82,7 +80,6 @@ public class UsersGroupsAdmin extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Group group = Group.loadById(connection, id);
                 group.delete(connection);
-                response.sendRedirect("/school/panelAdmin/UsersGroupsAdmin");
             } catch (SQLException e){
                 e.printStackTrace();
             }

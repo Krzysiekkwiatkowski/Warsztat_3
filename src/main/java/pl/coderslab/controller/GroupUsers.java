@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.UserDao;
 import pl.coderslab.model.DbUtil;
 import pl.coderslab.model.User;
 
@@ -22,7 +23,7 @@ public class GroupUsers extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         try {
             Connection connection = DbUtil.getConn();
-            User[] users = User.loadAllByGroupId(connection, id);
+            User[] users = UserDao.loadAllByGroupId(id);
             request.setAttribute("id", id);
             request.setAttribute("users", users);
             getServletContext().getRequestDispatcher("/GroupUsers.jsp")

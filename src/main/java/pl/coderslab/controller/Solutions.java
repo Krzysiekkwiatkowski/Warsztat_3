@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.SolutionDao;
 import pl.coderslab.model.DbUtil;
 import pl.coderslab.model.Solution;
 
@@ -19,14 +20,9 @@ public class Solutions extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         response.setCharacterEncoding("UtF-8");
-        try {
-            Connection connection = DbUtil.getConn();
-            Solution[] solutions = Solution.loadAll(connection);
-            request.setAttribute("solutions", solutions);
-            getServletContext().getRequestDispatcher("/Solutions.jsp")
-                    .forward(request, response);
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+        Solution[] solutions = SolutionDao.loadAll();
+        request.setAttribute("solutions", solutions);
+        getServletContext().getRequestDispatcher("/Solutions.jsp")
+                .forward(request, response);
     }
 }

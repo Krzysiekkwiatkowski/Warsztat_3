@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.dao.GroupDao;
 import pl.coderslab.model.DbUtil;
 import pl.coderslab.model.Group;
 
@@ -19,14 +20,9 @@ public class Groups extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         response.setCharacterEncoding("UtF-8");
-        try {
-            Connection connection = DbUtil.getConn();
-            Group[] groups = Group.loadAll(connection);
-            request.setAttribute("groups", groups);
-            getServletContext().getRequestDispatcher("/Groups.jsp")
-                    .forward(request, response);
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+        Group[] groups = GroupDao.loadAll();
+        request.setAttribute("groups", groups);
+        getServletContext().getRequestDispatcher("/Groups.jsp")
+                .forward(request, response);
     }
 }
